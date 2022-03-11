@@ -1,0 +1,12 @@
+
+---Issue---
+System tray (spot to show some active app icons like Discord,
+Flameshot, etc.) did not appear in i3bar.
+
+
+---Solution---
+I had been messing with xrandr, and tried to set things back with
+$ xrandr --auto
+However, the solution (on my Framework laptop) was
+$ xrandr --output eDP1 --primary
+they key party being the primary flag.
