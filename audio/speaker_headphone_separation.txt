@@ -1,0 +1,21 @@
+
+---System Info---
+EndeavourOS
+i3WM
+Pipewire
+
+---Issue---------
+Plugging/unplugging headphone seemed to mix mute settings.
+For example, if audio was playing through speakers at level X,
+system was muted, headphones were plugged in (giving audio out from
+them), then headphones were unplugged, the system would not stay muted
+(the previous speaker setting) but instead would play at level X.
+
+---Solution------
+Correctly bind "mute key" in i3 configuration file.
+
+Binding was
+    bindsym XF86AudioMute exec amixer sset Master toggle && killall -USR1 i3blocks
+which did not interface with Pulse, when it should have been
+    bindsym XF86AudioMute exec amixer -D pulse sset Master toggle && killall -USR1 i3blocks
+which let's Pulse keep track of the two separately (just my understanding).

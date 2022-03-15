@@ -1,5 +1,5 @@
 
----Issue---
+---Issue------
 System tray (spot to show some active app icons like Discord,
 Flameshot, etc.) did not appear in i3bar.
 
