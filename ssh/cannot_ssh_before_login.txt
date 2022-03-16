@@ -1,0 +1,12 @@
+
+---System Info---
+openSUSE Leap 15 server
+
+---Issue---------
+attempting to login to server over SSH (when on same local network)
+failed when server had not yet logged into user account
+
+---Solution------
+Server was not connecting to network before login, needed to
+enable wifi network to be accessible to "all users" on server, so it
+would connect to network before user login.
