@@ -1,0 +1,14 @@
+
+---System Info---
+EndeavourOS
+Framework Laptop
+
+---Issue---------
+None of the colors entered in .config/termite/config
+seemed to affect the actual colors shown in terminal
+
+---Solution------
+I only entered color 0 through 6, deleting the rest up to 14.
+These 7-14 colors were actually critical for common file types like
+directories etc., so it used default colors for these file types.
+Added back those colors and set them appropriately.
