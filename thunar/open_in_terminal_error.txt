@@ -1,0 +1,15 @@
+
+---System Info---
+EndeavourOS
+i3
+Thunar File Manager
+
+
+---Issue---------
+Attempting to right click then "open file in terminal" gave an
+error like "fallback terminal emulator not found"
+
+---Solution------
+Thunar allows configuration of custom right click options, in this
+case I replaced the "exo-open ...." associated with the "Open in
+Terminal" option to "termite".
