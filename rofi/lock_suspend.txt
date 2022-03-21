@@ -1,0 +1,19 @@
+
+---System Info---
+EndeavourOS
+i3
+Framework Laptop
+
+---Issue---------
+Attempting to create a lock+suspend entry in the rofi power menu.
+Change the command of the "Suspend" entry to
+"<any lock command>; systemctl suspend"
+but when that entry was selected, the system would only ever lock.
+
+---Solution------
+Tried
+"<any lock command> && systemctl suspend"
+instead, which worked.
+TODO: if the ; version worked, then the && version should also work,
+      since the && does the same thing but takes the extra precaution
+      of checking exit flags according to bash syntax

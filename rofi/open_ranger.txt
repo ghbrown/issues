@@ -1,0 +1,13 @@
+
+---System Info---
+EndeavourOS
+i3
+Framework Laptop
+
+---Issue---------
+Attempting to open ranger from rofi dmenu always opens it in uxterm,
+regardless of the setting of the TERM or TERMINAL environment
+variables, or the settings in the rofi config.
+
+---Solution------
+TODO: find solution
