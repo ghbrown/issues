@@ -1,0 +1,96 @@
+
+---System Info---
+Local: Endeavour OS on Framework Laptop (Intel)
+Remote: Manjaro on desktop (Intel)
+
+---Issue---------
+*this is really more of a setup/how-to guide*
+
+---Solution------
+
+##Guide for streaming over a local newtork
+### Getting ssh-rdp
+On Arch-based systems: `$ yay -S ssh-rdp-git` on the local machine
+and `$ yay -S ssh-rdp-host-git` on the remote machine
+
+On other distributions: likely you can clone the GitHub repo via
+`$ git clone https://github.com/kokoko3k/ssh-rdp.git` and then run
+commands from the `path/to/ssh-rdp` directory), also be sure to
+install all of the required software in the GitHub readme on the
+proper machines
+
+### SSH setup
+- log into your remote machine and get its network address via
+  `$ ip a` (hint: it's not 127.0.0.1 one)
+- create an entry for this machine in the `~/.ssh/config` file of the
+  local machine (the one receiving the streamed content) and create
+  this file if it doesn't exist
+  ```
+  Host <alias for remote machine>
+      User      <remote username>
+      Hostname  <the IP address of the remote machine>
+  ```
+- make sure this connection works by trying to open a normal SSH
+  tunnel
+  ```
+    $ ssh <remote machine alias>
+  ```
+  if there doesn't work there may be a variety of reasons better
+  served by a guide specifically for setting up SSH (the most common
+  issues are: not starting the sshd/openssh daemon and enabling it to run
+  on startup [if you haven't used SSH server side on the remote
+  machine before], firewall [some distros])
+   
+### ssh-rdp setup (remote/streaming machine)
+- give access to the uinput device via
+  ```
+    echo 'KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess", OPTIONS+="static_node=uinput"' > tempfile && sudo mv tempfile /etc/udev/rules.d/70-uinput.rules
+  ```
+  then reboot the remote machine (mine wasn't working one night even
+  after multiple reboots, but after coming back to it the next night
+  it seemed to be fine)
+
+### ssh-rdp setup (local/receiving machine)
+- add local user on remote to input group
+  ```
+    $ sudo usermod -a -G input <local_username>
+  ```
+- log out of session/reboot computer for group change to take
+  effect
+- run `$ ssh-rdp.sh inputconfigs` with only a keyboard and mouse
+  plugged in, and no other devices (wireless controllers, etc.) paired
+- when prompted, hit any key on the keyboard being careful
+  not to touch the mouse (if anything goes wrong in the inputconfig
+  step just "Control + c" to get out of it, and rerun `$ ssh-rdp.sh
+  inputconfig`
+- when it asks if you'd like to forward another device, enter "y" then
+  hit "Enter" then touch your mouse or trackpad
+- it will again ask if you'd like to forward another device, (if you
+  are gaming, you'd probably like to forward a controller), while this
+  prompt is still up pair your controller and only then answer "y" and
+  hit "Enter", it may now detect the controller automatically (if your
+  controller is anything like my wired PS3 controller, it's always
+  generating inputs which is why I paired it after the keyboard was
+  found) or you may have to press a button on it
+
+### Running ssh-rdp
+- make sure your remote machine is logged in and running a graphical
+  session
+- determine the display number of your remote machine by running
+  ```
+    $ echo $DISPLAY
+  ```
+  (this is a one time step unless your monitor setup changes)
+- attempt to run the main script to stream the remote content
+  ```
+    $ ssh-rdp.sh --user <remote username> \
+    --server <remote machine alias> \
+    --display <value of $DISPLAY>.0 <other flags and options>
+  ```
+  (you'll probably want to create a bash function or alias for this in
+  your shell configuration file (.bashrc, etc.))
+- play around with options like encoders, framerates,
+  etc. to optimize your experience
+
+
+

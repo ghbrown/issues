@@ -1,0 +1,25 @@
+
+---System Info---
+EndeavourOS on Framework Laptop
+
+---Issue---------
+Calling matplotlib.pyplot.plt.show() gives an error in terminal about
+the lack or failure of some library. Here is somebody else's example
+since I fixed this error before writing the issue:
+  libGL error: MESA-LOADER: failed to open iris: /home/souvik/anaconda3/envs/game_env/bin/../lib/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /usr/lib/dri/iris_dri.so) (search paths /usr/lib/dri)
+  libGL error: failed to load driver: iris
+  libGL error: MESA-LOADER: failed to open iris: /home/souvik/anaconda3/envs/game_env/bin/../lib/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /usr/lib/dri/iris_dri.so) (search paths /usr/lib/dri)
+  libGL error: failed to load driver: iris
+  libGL error: MESA-LOADER: failed to open swrast: /home/souvik/anaconda3/envs/game_env/bin/../lib/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /usr/lib/dri/swrast_dri.so) (search paths /usr/lib/dri)
+  libGL error: failed to load driver: swrast
+However, (thankfully) the plot would still show.
+
+---Solution------
+Following this answer: https://unix.stackexchange.com/questions/655495/trying-to-run-pygame-on-my-conda-environment-on-my-fresh-manjaro-install-and-ge
+copy the dynamic library it's searching for into the *conda  environment.
+If system libraries have the version (check via
+  strings usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4.2
+), then copy the shared library into the *conda environment lib
+directory. Or the example also seems to suggest you can copy it into
+a lib folder shared by all the conda environments.
+
