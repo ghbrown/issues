@@ -1,0 +1,16 @@
+
+---System Info---
+Endeavour OS on Framework latptop
+
+---Issue---------
+Running "Virtual Machine Manager" app gave error about QEMU not being
+operational, regarding some socket not existing.
+No virtualization services (LXC or QEMU/KVM) were operational, and no
+virtual machines appeared.
+
+---Solution------
+Use specific commands to start and enable libvirtd
+  sudo systemctl enable libvirtd
+  sudo systemctl start libvirtd
+then launch virt-manager as app (there's also a way to set this up
+automatically, but right now it's more trouble than it's worth)

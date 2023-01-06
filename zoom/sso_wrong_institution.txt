@@ -1,0 +1,15 @@
+
+---System Info---
+Android
+Moto G Power cell phone
+
+---Issue---------
+Attempting to use SSO at new institution opened a link to my old
+institution. Since only SSO was permitted, I was unable to sign into
+Zoom at the new institution.
+
+---Solution------
+The Zoom app itself had cached data about what institution I was at
+and would use this cached data to open the SSO of the old institution.
+To fix this delete cache and storage of Zoom app on Android
+(Settings -> Apps -> Zoom)
