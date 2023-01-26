@@ -1,0 +1,43 @@
+
+---System Info---
+EndeavourOS on Framework Laptop
+
+---Issue---------
+setting up hibernation is extremely difficult
+
+---Solution------
+
+**GENERAL TIPS**
+- the ArchWiki is generally very complete, but assumes a high level of
+  knowledge, doing very little handholding when it comes to adding
+  kernel parameters and regenerating mkinitcpio and grub
+- checking journalctl can be very useful when diagnosing why
+  hibernate isn't working as intended
+- even when hibernate works, it will look like the laptop is booting,
+  splash screen, choose image, etc. but will then immediately
+  recover the hibernated state
+
+**SWAP FILE**
+set up swap file in /home using this guide:
+  https://linuxize.com/post/create-a-linux-swap-file/
+
+a very useful command for checking if /etc/fstab has errors is
+  sudo findmnt --verify --verbose
+
+enable systemd to read from /home on login (not default behavior):
+  https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
+  https://github.com/systemd/systemd/issues/15354
+  https://bbs.archlinux.org/viewtopic.php?id=259382
+
+**GRUB AND OTHER EARLY BOOT STUFF**
+add "resume" to mkinitcpio and configure kernel parameters related to
+swap file:
+  https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
+  https://www.youtube.com/watch?v=Xek3TGKzLWw
+
+mkinitcpio can be regenerated with:
+  sudo mkinitcpio -p linux
+
+get the UUID of the partition CONTAINING the swap file with:
+  sudo findmnt -no UUID -T <path to swap file>
+
